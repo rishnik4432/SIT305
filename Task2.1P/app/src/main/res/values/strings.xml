@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Task 2.1P</string>
+    <string-array name="units_array">
+        <item>USD</item>
+        <item>AUD</item>
+        <item>mpg</item>
+        <item>km/L</item>
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+    </string-array>
+</resources>
