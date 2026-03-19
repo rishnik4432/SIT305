@@ -1,7 +1,11 @@
 package com.example.task21p;
 
 import android.os.Bundle;
+import android.content.Context;
+import android.graphics.Typeface;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,25 +34,91 @@ public class MainActivity extends AppCompatActivity {
         textViewResult = findViewById(R.id.textViewResult);
         btnConvert = findViewById(R.id.btnConvert);
 
-        //Create adaptor for spinner
-        ArrayAdapter<CharSequence>adapter = ArrayAdapter.createFromResource(this,
-                R.array.units_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Create the list of UnitItems with headers
+        List<UnitItem> unitItems = getUnitItems();
 
+        //Create custom adapter
+        UnitAdapter adapter = new UnitAdapter(this, unitItems);
+
+        //Set adapter to both spinners
         spinnerSource.setAdapter(adapter);
         spinnerDest.setAdapter(adapter);
 
         btnConvert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 performConversion();
             }
         });
     }
 
+    private List<UnitItem> getUnitItems() {
+        List<UnitItem> items = new ArrayList<>();
+
+        //Currency section
+        items.add(new UnitItem(UnitItem.TYPE_HEADER, "Currency"));
+        items.add(new UnitItem(UnitItem.TYPE_UNIT, "USD"));
+        items.add(new UnitItem(UnitItem.TYPE_UNIT, "AUD"));
+
+        //Fuel Efficiency section
+        items.add(new UnitItem(UnitItem.TYPE_HEADER, "Fuel Efficiency"));
+        items.add(new UnitItem(UnitItem.TYPE_UNIT, "mpg"));
+        items.add(new UnitItem(UnitItem.TYPE_UNIT, "km/L"));
+
+        //Temperature section
+        items.add(new UnitItem(UnitItem.TYPE_HEADER, "Temperature"));
+        items.add(new UnitItem(UnitItem.TYPE_UNIT, "Celsius"));
+        items.add(new UnitItem(UnitItem.TYPE_UNIT, "Fahrenheit"));
+
+        return items;
+    }
+    private class UnitAdapter extends ArrayAdapter<UnitItem> {
+        public UnitAdapter(Context context, List<UnitItem> items) {
+            super(context, 0, items);
+        }
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent, false);
+        }
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent, true);
+        }
+        private View getCustomView(int position, View convertView, ViewGroup parent, boolean isDropDown) {
+            UnitItem item = getItem(position);
+
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
+            }
+            TextView textView = convertView.findViewById(android.R.id.text1);
+            textView.setText(item.getName());
+
+            if (item.getType() == UnitItem.TYPE_HEADER) {
+                textView.setTypeface(null, Typeface.BOLD); //make header bold
+                textView.setBackgroundColor(getContext().getResources().getColor(android.R.color.darker_gray));
+            } else {
+                textView.setTypeface(null, Typeface.NORMAL);
+                textView.setBackgroundColor(getContext().getResources().getColor(android.R.color.transparent));
+            }
+            return convertView;
+        }
+        @Override
+        public boolean isEnabled(int position) {
+            //Disable headers (cannot be selected)
+            return getItem(position).getType() == UnitItem.TYPE_UNIT;
+        }
+    }
+
     private void performConversion() {
-        String source = spinnerSource.getSelectedItem().toString();
-        String dest = spinnerDest.getSelectedItem().toString();
+        //Get selected UnitItem objects
+        UnitItem sourceItem = (UnitItem) spinnerSource.getSelectedItem();
+        UnitItem destItem = (UnitItem) spinnerDest.getSelectedItem();
+
+        //Extract the unit names
+        String source = sourceItem.getName();
+        String dest = destItem.getName();
+
         String inputStr = editTextValue.getText().toString().trim();
 
         //validate empty input
