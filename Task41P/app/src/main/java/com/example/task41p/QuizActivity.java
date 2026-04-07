@@ -128,7 +128,7 @@ public class QuizActivity extends AppCompatActivity{
     private void loadQuestion() {
         Question q = questions.get(currentIndex);
         tvQuestion.setText(q.getText());
-        tvQuestionNumber.setText("Question" + (currentIndex +1) + "/" + questions.size());
+        tvQuestionNumber.setText("Question " + (currentIndex +1) + "/" + questions.size());
 
         //set option texts and reset colors/enabled state
         String[] opts = q.getOptions();
