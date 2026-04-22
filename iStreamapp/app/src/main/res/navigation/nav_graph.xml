@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.istreamapp.fragments.LoginFragment"
+        android:label="Login" />
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.example.istreamapp.fragments.SignupFragment"
+        android:label="Sign Up" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.istreamapp.fragments.HomeFragment"
+        android:label="Home" />
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.example.istreamapp.fragments.PlaylistFragment"
+        android:label="My Playlist" />
+
+</navigation>
