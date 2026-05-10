@@ -36,6 +36,20 @@ android {
 }
 
 dependencies {
+    // LLM API calls (Retrofit)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.android.volley:volley:1.2.1")
+
+    // For swipe views (ViewPager2) and tabs (TabLayout)
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("com.google.android.material:material:1.9.0")
+
+    // Additional UI components
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
+    implementation("androidx.cardview:cardview:1.0.0")
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
