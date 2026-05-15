@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Task 9.1P</string>
+    <string name="google_maps_key">AIzaSyDS7yu9woTXcxwQr87Oul1LT804KGJX89o</string>
+
+    <string-array name="type_options">
+        <item>Lost</item>
+        <item>Found</item>
+    </string-array>
+
+    <string-array name="category_options">
+        <item>Electronics</item>
+        <item>Pets</item>
+        <item>Wallets</item>
+        <item>Keys</item>
+        <item>Others</item>
+    </string-array>
+</resources>
